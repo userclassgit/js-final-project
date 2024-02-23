@@ -9,9 +9,10 @@ const userBrowserElement = document.querySelector('.user-data-container span:nth
 const userWidthElement = document.querySelector('.box:nth-child(2) .user-data-container span:first-child');
 const userHeightElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(2)');
 const userOrientationElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(3)');
+const userBatteryLevelElement = document.querySelector('.box:nth-child(3) .user-data-container span:first-child');
+const userBatteryStatusElement = document.querySelector('.box:nth-child(3) .user-data-container span:nth-child(2)');
 
 let userAgent = navigator.userAgent;
-
 
 let userOrientation = '';
 let userViewportWidth = window.innerWidth;
@@ -71,6 +72,19 @@ function userOrientationDetector() {
     return userOrientation;
 }
 
+async function batteryLevelDetector() {
+    if (navigator.getBattery) {
+        try {
+            const battery = await navigator.getBattery();
+            return `${battery.level * 100}%`;
+        } catch (error) {
+            return 'not available';
+        }
+    } else {
+        return 'not available';
+    }
+}
+
 
 window.addEventListener('load', function() {
     userOSElement.textContent += userOSDetector();
@@ -81,6 +95,9 @@ window.addEventListener('load', function() {
     userHeightElement.textContent += userHeightDetector();
     userOrientationElement.textContent += userOrientationDetector();
 
+    batteryLevelDetector().then(function(result) {
+        userBatteryLevelElement.textContent += result;
+    });
 });
 
 window.addEventListener('resize', function() {
