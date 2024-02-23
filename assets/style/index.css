@@ -64,4 +64,5 @@ body {
     margin-top: var(--margin-top);
     border-radius: var(--border-radius);
     background-color: var(--button-green);
+    transition: all 0.3s ease-in-out;
 }

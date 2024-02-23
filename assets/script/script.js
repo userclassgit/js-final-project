@@ -8,6 +8,7 @@ const userBrowserElement = document.querySelector('.user-data-container span:nth
 const userWidthElement = document.querySelector('.box:nth-child(2) .user-data-container span:first-child');
 const userHeightElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(2)');
 const userOrientationElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(3)');
+
 const userBatteryLevelElement = document.querySelector('.box:nth-child(3) .user-data-container span:first-child');
 const userBatteryStatusElement = document.querySelector('.box:nth-child(3) .user-data-container span:nth-child(2)');
 
