@@ -7,13 +7,14 @@ const userLanguageElement = document.querySelector('.user-data-container span:nt
 const userBrowserElement = document.querySelector('.user-data-container span:nth-child(3)');
 
 const userWidthElement = document.querySelector('.box:nth-child(2) .user-data-container span:first-child');
-
+const userHeightElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(2)');
 
 let userAgent = navigator.userAgent;
 let userPlatform = "Unknown OS";
 let userLanguage = navigator.language || navigator.userLanguage;
 let userBrowser = "Unknown Browser";
 let userViewportWidth = window.innerWidth;
+let userViewportHeight = window.innerHeight;
 
 // detecting user OS
 if (userAgent.indexOf("Win") != -1) userPlatform = "Windows";
@@ -41,11 +42,15 @@ window.addEventListener('load', function() {
     userBrowserElement.textContent += userBrowser;
 
     userWidthElement.textContent += `${userViewportWidth}px`;
+    userHeightElement.textContent += `${userViewportHeight}px`;
 
 });
 
 window.addEventListener('resize', function() {
     userViewportWidth = window.innerWidth;
+    userViewportHeight = window.innerHeight;
+
     userWidthElement.textContent = `Width: ${userViewportWidth}px`;
+    userHeightElement.textContent = `Height: ${userViewportHeight}px`;
 });
 
