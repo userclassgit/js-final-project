@@ -53,6 +53,7 @@ body {
         background-color: var(--main-color);
         padding: 15px;
         justify-content: center;
+        gap: 10px;
     }
 }
 
