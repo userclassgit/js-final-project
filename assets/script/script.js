@@ -1,5 +1,4 @@
 'use strict';
-// test on multiple browsers
 
 // HTML elements
 const userOSElement = document.querySelector('.user-data-container span:first-child');
@@ -94,7 +93,7 @@ async function batteryStatusDetector() {
             if (battery.charging) {
                 return 'charging';
             } else {
-                return 'not charging';
+                return 'idle';
             }
         } catch (error) {
             return 'not available';
@@ -113,7 +112,7 @@ function networkStatusDetector() {
 }
 
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     userOSElement.textContent += userOSDetector();
     userLanguageElement.textContent += userLanguageDetector();
     userBrowserElement.textContent += userBrowserDetector();
@@ -122,17 +121,15 @@ window.addEventListener('load', function() {
     userHeightElement.textContent += userHeightDetector();
     userOrientationElement.textContent += userOrientationDetector();
 
-    batteryLevelDetector().then(function(result) {
+    batteryLevelDetector().then(function (result) {
         userBatteryLevelElement.textContent += result;
     });
-    batteryStatusDetector().then(function(result) {
+    batteryStatusDetector().then(function (result) {
         userBatteryStatusElement.textContent += result;
     });
-
-    // userNetworkStatusElement.textContent = networkStatusDetector();
 });
 
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     userViewportWidth = window.innerWidth;
     userViewportHeight = window.innerHeight;
     userOrientation = userOrientationDetector();
@@ -143,12 +140,22 @@ window.addEventListener('resize', function() {
     userOrientationElement.textContent = `Orientation: ${userOrientation}`;
 });
 
-window.addEventListener('offline', function() {
+window.addEventListener('offline', function () {
     userNetworkStatusElement.textContent = networkStatusDetector();
     userNetworkStatusElement.style.backgroundColor = 'rgb(235, 0, 0)';
 });
 
-window.addEventListener('online', function() {
+window.addEventListener('online', function () {
     userNetworkStatusElement.textContent = networkStatusDetector();
     userNetworkStatusElement.style.backgroundColor = 'var(--button-green)';
+});
+
+navigator.getBattery().then(function (battery) {
+    battery.addEventListener('chargingchange', function () {
+        if (battery.charging) {
+            userBatteryStatusElement.textContent = 'Status: charging';
+        } else {
+            userBatteryStatusElement.textContent = 'Status: idle';
+        }
+    });
 });
