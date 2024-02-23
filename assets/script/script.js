@@ -85,6 +85,24 @@ async function batteryLevelDetector() {
     }
 }
 
+async function batteryStatusDetector() {
+    if (navigator.getBattery) {
+        try {
+            const battery = await navigator.getBattery();
+            if (battery.charging) {
+                return 'charging';
+            } else {
+                return 'not charging';
+            }
+        } catch (error) {
+            return 'not available';
+        }
+    } else {
+        return 'not available';
+    }
+}
+
+
 
 window.addEventListener('load', function() {
     userOSElement.textContent += userOSDetector();
@@ -97,6 +115,9 @@ window.addEventListener('load', function() {
 
     batteryLevelDetector().then(function(result) {
         userBatteryLevelElement.textContent += result;
+    });
+    batteryStatusDetector().then(function(result) {
+        userBatteryStatusElement.textContent += result;
     });
 });
 
