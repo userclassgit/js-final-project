@@ -8,11 +8,12 @@ const userBrowserElement = document.querySelector('.user-data-container span:nth
 
 const userWidthElement = document.querySelector('.box:nth-child(2) .user-data-container span:first-child');
 const userHeightElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(2)');
+const userOrientationElement = document.querySelector('.box:nth-child(2) .user-data-container span:nth-child(3)');
 
 let userAgent = navigator.userAgent;
 
 
-
+let userOrientation = '';
 let userViewportWidth = window.innerWidth;
 let userViewportHeight = window.innerHeight;
 
@@ -60,6 +61,17 @@ function userHeightDetector() {
     return `${userViewportHeight}px`
 }
 
+function userOrientationDetector() {
+    if (window.innerWidth > window.innerHeight) {
+        userOrientation = 'landscape';
+    } else {
+        userOrientation = 'portrait';
+    }
+
+    return userOrientation;
+}
+
+
 window.addEventListener('load', function() {
     userOSElement.textContent += userOSDetector();
     userLanguageElement.textContent += userLanguageDetector();
@@ -67,14 +79,18 @@ window.addEventListener('load', function() {
 
     userWidthElement.textContent += userWidthDetector();
     userHeightElement.textContent += userHeightDetector();
+    userOrientationElement.textContent += userOrientationDetector();
 
 });
 
 window.addEventListener('resize', function() {
     userViewportWidth = window.innerWidth;
     userViewportHeight = window.innerHeight;
+    userOrientation = userOrientationDetector();
 
     userWidthElement.textContent = `Width: ${userWidthDetector()}`;
     userHeightElement.textContent = `Height: ${userHeightDetector()}`;
+
+    userOrientationElement.textContent = `Orientation: ${userOrientation}`;
 });
 
