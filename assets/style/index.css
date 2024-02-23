@@ -57,9 +57,9 @@ body {
     }
 }
 
-button {
+.network-status {
     width: 100%;
-    height: 4rem;
+    height: 4.5rem;
     color: #fff;
     margin-top: var(--margin-top);
     border-radius: var(--border-radius);

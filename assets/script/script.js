@@ -12,6 +12,8 @@ const userOrientationElement = document.querySelector('.box:nth-child(2) .user-d
 const userBatteryLevelElement = document.querySelector('.box:nth-child(3) .user-data-container span:first-child');
 const userBatteryStatusElement = document.querySelector('.box:nth-child(3) .user-data-container span:nth-child(2)');
 
+const userNetworkStatusElement = document.querySelector('.network-status');
+
 let userAgent = navigator.userAgent;
 
 let userOrientation = '';
@@ -102,6 +104,13 @@ async function batteryStatusDetector() {
     }
 }
 
+function networkStatusDetector() {
+    if (navigator.onLine) {
+        return 'ONLINE';
+    } else {
+        return 'OFFLINE';
+    }
+}
 
 
 window.addEventListener('load', function() {
@@ -119,6 +128,8 @@ window.addEventListener('load', function() {
     batteryStatusDetector().then(function(result) {
         userBatteryStatusElement.textContent += result;
     });
+
+    // userNetworkStatusElement.textContent = networkStatusDetector();
 });
 
 window.addEventListener('resize', function() {
@@ -132,3 +143,12 @@ window.addEventListener('resize', function() {
     userOrientationElement.textContent = `Orientation: ${userOrientation}`;
 });
 
+window.addEventListener('offline', function() {
+    userNetworkStatusElement.textContent = networkStatusDetector();
+    userNetworkStatusElement.style.backgroundColor = 'rgb(235, 0, 0)';
+});
+
+window.addEventListener('online', function() {
+    userNetworkStatusElement.textContent = networkStatusDetector();
+    userNetworkStatusElement.style.backgroundColor = 'var(--button-green)';
+});
